@@ -1,15 +1,13 @@
 const AWS = require('aws-sdk');
-const readline = require('readline');
 const stream = require('stream');
 
 const Transform = stream.Transform;
 const s3 = new AWS.S3();
 
-const INPUT_FILE = 'Iris.csv';
-const OUTPUT_FILE = 'output.csv';
-const BUCKET_NAME = 'rmagee-glue-athena-test';
+const INPUT_FILE = 'INPUT_FILE_NAME';
+const OUTPUT_FILE = 'OUTPUT_FILE_NAME';
+const BUCKET_NAME = 'BUCKET_NAME';
 
-const through2 = require('through2');
 const split2 = require('split2');
 
 let readParams = {

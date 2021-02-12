@@ -1,13 +1,12 @@
 const AWS = require('aws-sdk');
-const readline = require('readline');
 const stream = require('stream');
 
 const Transform = stream.Transform;
 const s3 = new AWS.S3();
 
-const INPUT_FILE = 'custom_from_1988.csv';
-const OUTPUT_FILE = 'output.csv';
-const BUCKET_NAME = 'rmagee-glue-athena-test';
+const INPUT_FILE = 'INPUT_FILE_NAME';
+const OUTPUT_FILE = 'OUTPUT_FILE_NAME';
+const BUCKET_NAME = 'BUCKET_NAME';
 
 const split2 = require('split2');
 
@@ -39,7 +38,7 @@ exports.handler = (event) => {
     const bufferMutator = new Transform({
         transform(chunk, encoding, callback) {
             let line = chunk.toString();
-            line = line.toUpperCase();
+            // Do mutations to 'line' here
             this.push(`${line}\n`);
             callback();
         }
