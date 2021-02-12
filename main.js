@@ -36,7 +36,7 @@ const { writeStream, uploadPromise } = writeToBucket();
 const bufferMutator = new Transform({
     transform(chunk, encoding, callback) {
         let line = chunk.toString();
-        line = line.toUpperCase();
+        // Do mutations to 'line' here
         this.push(`${line}\n`);
         callback();
     }
