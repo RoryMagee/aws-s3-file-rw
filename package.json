@@ -1,0 +1,22 @@
+{
+  "name": "aws-s3-file-rw",
+  "version": "1.0.0",
+  "description": "writingwhilereadingwhilewritingwhilereading",
+  "main": "main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/RoryMagee/aws-s3-file-rw.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/RoryMagee/aws-s3-file-rw/issues"
+  },
+  "homepage": "https://github.com/RoryMagee/aws-s3-file-rw#readme",
+  "dependencies": {
+    "split2": "^3.2.2"
+  }
+}
