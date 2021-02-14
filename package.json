@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/RoryMagee/aws-s3-file-rw#readme",
   "dependencies": {
+    "binary-split": "^1.0.5",
     "split2": "^3.2.2"
   }
 }
