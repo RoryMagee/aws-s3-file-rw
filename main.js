@@ -3,6 +3,7 @@ const stream = require('stream');
 
 const Transform = stream.Transform;
 const s3 = new AWS.S3();
+const { pipeline } = require('stream');
 
 const INPUT_FILE = 'INPUT_FILE_NAME';
 const OUTPUT_FILE = 'OUTPUT_FILE_NAME';
@@ -42,17 +43,24 @@ const bufferMutator = new Transform({
     }
 });
 
-readStream.pipe(split2()).pipe(bufferMutator).pipe(writeStream);
+pipeline(
+    readStream,
+    bufferMutator,
+    writeStream,
+    (err) => {
+        if (err) {
+            console.error('Error with pipeline');
+        } else {
+            console.log('success')
+        }
+    }
+)
 
-writeStream.on('data', (data) => {
-    console.log('writer', data);
-})
-
-readStream.on('close', async () => {
-    console.log('Download complete');
-    writeStream.end();
-    await uploadPromise.then(data => {
-        console.log(data);
-        console.log('Upload Complete');
-    });
-});
+//readStream.on('close', async () => {
+//    console.log('Download complete');
+//    writeStream.end();
+//    await uploadPromise.then(data => {
+//        console.log(data);
+//        console.log('Upload Complete');
+//    });
+//});
