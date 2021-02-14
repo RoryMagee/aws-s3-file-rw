@@ -11,33 +11,25 @@ const BUCKET_NAME = 'BUCKET_NAME';
 
 const split2 = require('split2');
 
+const writeStream = new stream.PassThrough();
+
 let readParams = {
     Bucket: BUCKET_NAME,
     Key: INPUT_FILE
 }
 
-function writeToBucket() {
-    const writeStream = new stream.PassThrough();
-
-    let writeParams = {
-        Bucket: BUCKET_NAME,
-        Key: OUTPUT_FILE,
-        Body: writeStream
-    }
-
-    const uploadPromise = s3.upload(writeParams).promise();
-
-    return { writeStream, uploadPromise }
+let writeParams = {
+    Bucket: BUCKET_NAME,
+    Key: OUTPUT_FILE,
+    Body: writeStream
 }
 
 let readStream = s3.getObject(readParams).createReadStream();
-
-const { writeStream, uploadPromise } = writeToBucket();
+s3.upload(writeParams).send();
 
 const bufferMutator = new Transform({
     transform(chunk, encoding, callback) {
         let line = chunk.toString();
-        // Do mutations to 'line' here
         this.push(`${line}\n`);
         callback();
     }
@@ -50,18 +42,9 @@ pipeline(
     writeStream,
     (err) => {
         if (err) {
-            console.error('Error with pipeline');
+            console.error('Error with pipeline', err);
         } else {
             console.log('success')
         }
     }
-)
-
-//readStream.on('close', async () => {
-//    console.log('Download complete');
-//    writeStream.end();
-//    await uploadPromise.then(data => {
-//        console.log(data);
-//        console.log('Upload Complete');
-//    });
-//});
+);
