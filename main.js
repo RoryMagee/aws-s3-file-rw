@@ -45,6 +45,7 @@ const bufferMutator = new Transform({
 
 pipeline(
     readStream,
+    split2(),
     bufferMutator,
     writeStream,
     (err) => {
